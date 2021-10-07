@@ -14,6 +14,13 @@ type alias Player =
     }
 
 
+type Edit
+    = Name String
+    | Color String
+    | Gender Gender
+    | Orientation Orientation
+
+
 type Orientation
     = Straight
     | Gay

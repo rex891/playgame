@@ -1,12 +1,8 @@
 module Msg exposing (Msg(..))
 
-import Data.Player exposing (Gender, Orientation)
+import Data.Player exposing (Edit)
 
 
 type Msg
     = NoOp
-    | SaveStateRequested
-    | UsernameEdited String
-    | ColorEdited String
-    | GenderSelected Gender
-    | OrientationSelected Orientation
+    | StateEdited Edit

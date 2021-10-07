@@ -3,7 +3,7 @@ module Main exposing (init, main, subscriptions, update, view)
 import Browser exposing (Document)
 import Data.Activity exposing (Activity(..))
 import Data.Model exposing (Model)
-import Data.Player exposing (playerDecoder, playerEncoder)
+import Data.Player exposing (Edit(..), playerDecoder, playerEncoder)
 import Html exposing (div, text)
 import Html.Attributes exposing (class)
 import Json.Decode as De exposing (field, list)
@@ -64,7 +64,7 @@ update msg model =
         NoOp ->
             ( model, Cmd.none )
 
-        UsernameEdited name ->
+        StateEdited edit ->
             case model.activity of
                 EditingPlayer num ->
                     let
@@ -75,62 +75,25 @@ update msg model =
                         Just player ->
                             let
                                 players =
-                                    setAt num { player | name = name } model.players
+                                    setAt num
+                                        (case edit of
+                                            Name name ->
+                                                { player | name = name }
+
+                                            Orientation orientation ->
+                                                { player | orientation = orientation }
+
+                                            Gender gender ->
+                                                { player | gender = gender }
+
+                                            Color color ->
+                                                { player | color = color }
+                                        )
+                                        model.players
                             in
                             ( { model | players = players }
                             , Ports.setState <| En.list playerEncoder players
                             )
-
-                        _ ->
-                            ( model, Cmd.none )
-
-        ColorEdited color ->
-            case model.activity of
-                EditingPlayer num ->
-                    let
-                        mPlayer =
-                            getAt num model.players
-                    in
-                    case mPlayer of
-                        Just player ->
-                            let
-                                players =
-                                    setAt num { player | color = color } model.players
-                            in
-                            ( { model | players = players }
-                            , Ports.setState <| En.list playerEncoder players
-                            )
-
-                        _ ->
-                            ( model, Cmd.none )
-
-        SaveStateRequested ->
-            ( model, Ports.setState (En.list playerEncoder model.players) )
-
-        GenderSelected gender ->
-            case model.activity of
-                EditingPlayer num ->
-                    let
-                        mPlayer =
-                            getAt num model.players
-                    in
-                    case mPlayer of
-                        Just player ->
-                            ( { model | players = setAt num { player | gender = gender } model.players }, Cmd.none )
-
-                        _ ->
-                            ( model, Cmd.none )
-
-        OrientationSelected orientation ->
-            case model.activity of
-                EditingPlayer num ->
-                    let
-                        mPlayer =
-                            getAt num model.players
-                    in
-                    case mPlayer of
-                        Just player ->
-                            ( { model | players = setAt num { player | orientation = orientation } model.players }, Cmd.none )
 
                         _ ->
                             ( model, Cmd.none )
