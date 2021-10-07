@@ -1,0 +1,20 @@
+body {
+  height: 100vh;
+  position: relative;
+  background-color: rgb(57, 104, 175);
+  font-family: 'Roboto', 'Source Sans Pro', 'Trebuchet MS', 'Lucida Grande',
+    'Bitstream Vera Sans', 'Helvetica Neue', sans-serif;
+}
+
+.player-editor {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100vh;
+}
+
+.selectedRadio {
+  background-color: lightgreen;
+
+  border-radius: 10px;
+}
