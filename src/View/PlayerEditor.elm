@@ -2,7 +2,7 @@ module View.PlayerEditor exposing (..)
 
 import Data.Player exposing (Edit(..), Gender(..), Orientation(..), Player)
 import Html exposing (div)
-import Html.Attributes exposing (class, style)
+import Html.Attributes exposing (style)
 import Msg exposing (Msg(..))
 import View.Components.ColorInput as CI
 import View.Components.Radio as R
@@ -16,6 +16,7 @@ viewPlayerEditor player =
         , style "display" "flex"
         , style "flex-direction" "column"
         , style "justify-content" "space-evenly"
+        , style "align-items" "flex-start"
         , style "gap" "30px"
         , style "max-width" "400px"
         , style "margin" "30px"
@@ -24,6 +25,7 @@ viewPlayerEditor player =
             |> TI.withWidth "100%"
             |> TI.toHtml
         , CI.colorInput "COLOR: " player.color (StateEdited << Color)
+            -- |> CI.withWidth "100%"
             |> CI.toHtml
         , R.radio
             { label = "GENDER:"

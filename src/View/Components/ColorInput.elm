@@ -31,9 +31,14 @@ withWidth width (ColorInput options toMsg label value) =
 
 toHtml : ColorInput msg -> Html.Html msg
 toHtml (ColorInput options toMsg lab val) =
+    let
+        _ =
+            Debug.log "width" options.width
+    in
     div
         [ style "display" "flex"
         , style "align-items" "center"
+        , style "width" "100%"
         , style "justify-content" "center"
         ]
         [ label
@@ -44,7 +49,7 @@ toHtml (ColorInput options toMsg lab val) =
         , input
             [ type_ "color"
             , id "color-widget"
-            , style "width" "80px"
+            , style "width" options.width
             , style "height" "50px"
             , value val
             , onInput toMsg

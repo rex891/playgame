@@ -1,6 +1,6 @@
 module View.Components.Radio exposing (..)
 
-import Html exposing (div, input, label, span, text)
+import Html exposing (div, label, span, text)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 
@@ -62,7 +62,8 @@ toRow (Radio radioConfig radioParams) =
     div
         [ style "display" "flex"
         , style "align-items" "center"
-        , style "justify-content" "center"
+
+        -- , style "justify-content" "center"
         , style "width" radioConfig.width
         ]
         [ span [ style "padding-right" "10px" ] [ text radioParams.label ]
@@ -79,6 +80,7 @@ toRow (Radio radioConfig radioParams) =
                 (\(Option optionConfig optionValue lab) ->
                     div
                         [ style "padding" "10px"
+                        , style "width" optionConfig.width
                         , classList [ ( "selectedRadio", Just optionValue == radioParams.selected ) ]
                         , onClick <| radioParams.toMsg optionValue
                         ]

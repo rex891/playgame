@@ -12,6 +12,7 @@ import List.Extra exposing (getAt, setAt)
 import Msg exposing (Msg(..))
 import Ports
 import View.PlayerEditor exposing (viewPlayerEditor)
+import View.Players
 
 
 main : Program De.Value Model Msg
@@ -32,7 +33,7 @@ init flags =
                 Ok players ->
                     players
 
-                Err e ->
+                Err _ ->
                     []
     in
     ( { players = plyrs
@@ -47,13 +48,7 @@ view model =
     { title = "playgame"
     , body =
         [ div [ class "body" ]
-            [ case List.head model.players of
-                Just player ->
-                    viewPlayerEditor player
-
-                Nothing ->
-                    text "nope"
-            ]
+            [ View.Players.view ]
         ]
     }
 
@@ -100,6 +95,6 @@ update msg model =
 
 
 subscriptions : Model -> Sub Msg
-subscriptions model =
+subscriptions _ =
     Sub.batch <|
         []
